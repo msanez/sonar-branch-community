@@ -1,0 +1,4 @@
+@ParametersAreNonnullByDefault
+package org.sonarsource.branch.computeengine;
+
+import javax.annotation.ParametersAreNonnullByDefault;
