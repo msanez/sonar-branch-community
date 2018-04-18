@@ -35,8 +35,11 @@ public class BranchConfigurationLoaderImpl implements BranchConfigurationLoader 
 
     private BranchConfiguration loadConfiguration(String branchName, @Nullable String targetBranch, Supplier<Map<String, String>> remoteSettingsSupplier, ProjectBranches branches) {
         if (branches.isEmpty()) {
-            // SonarQube doesn't support using branch properties for a new project even if scanning main branch
-            throw MessageException.of("No branches found for a project. Run regular analysis on main branch before using branch plugin.");
+            if ("master".equals(branchName)) {
+                return new DefaultBranchConfiguration();
+            } else {
+                throw MessageException.of("Project not found. Run analysis for master branch before analysing other branches.");
+            }
         } else {
             String base = targetBranch;
             BranchInfo branchInfo = branches.get(branchName);

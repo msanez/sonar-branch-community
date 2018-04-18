@@ -17,12 +17,14 @@ import org.sonar.scanner.scan.branch.BranchType;
 import org.sonar.scanner.scan.branch.ProjectBranches;
 import org.sonar.scanner.scan.branch.ProjectBranchesLoader;
 import org.sonarqube.ws.client.GetRequest;
+import org.sonarqube.ws.client.HttpException;
 import org.sonarqube.ws.client.WsResponse;
 
 /**
  * Retrieves list of project's branches using API call.
  */
 public class ProjectBranchesLoaderImpl implements ProjectBranchesLoader {
+    private static final int HTTP_NOT_FOUND_CODE = 404;
     private static final Logger LOGGER = Loggers.get(ProjectBranchesLoaderImpl.class);
     private static final Gson GSON = new Gson();
 
@@ -42,7 +44,11 @@ public class ProjectBranchesLoaderImpl implements ProjectBranchesLoader {
         try (WsResponse response = wsClient.call(request)) {
             return readResponse(response);
         } catch (IOException | RuntimeException e) {
-            LOGGER.warn("Unable to load list of branches. Using empty list.", e);
+            if (e instanceof HttpException && ((HttpException) e).code() == HTTP_NOT_FOUND_CODE) {
+                LOGGER.info("Project not found when loading list of branches. Using empty list.");
+            } else {
+                LOGGER.warn("Unable to load list of branches. Using empty list.", e);
+            }
             return Collections.emptyList();
         }
     }

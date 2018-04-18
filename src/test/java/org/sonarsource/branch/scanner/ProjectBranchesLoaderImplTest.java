@@ -8,6 +8,7 @@ import org.sonar.scanner.bootstrap.ScannerWsClient;
 import org.sonar.scanner.scan.branch.BranchInfo;
 import org.sonar.scanner.scan.branch.BranchType;
 import org.sonar.scanner.scan.branch.ProjectBranches;
+import org.sonarqube.ws.client.HttpException;
 import org.sonarqube.ws.client.MockWsResponse;
 
 import static org.junit.Assert.assertEquals;
@@ -42,6 +43,18 @@ public class ProjectBranchesLoaderImplTest {
     @Test
     public void load_io_exception() {
         when(wsClient.call(any())).thenThrow(new RuntimeException());
+        ProjectBranchesLoaderImpl branchesLoader = new ProjectBranchesLoaderImpl(wsClient);
+
+        Loggers.get(ProjectBranchesLoaderImpl.class).setLevel(LoggerLevel.ERROR);
+        ProjectBranches projectBranches = branchesLoader.load(PROJECT_KEY);
+        Loggers.get(ProjectBranchesLoaderImpl.class).setLevel(LoggerLevel.INFO);
+
+        assertTrue(projectBranches.isEmpty());
+    }
+
+    @Test
+    public void load_404_exception() {
+        when(wsClient.call(any())).thenThrow(new HttpException("", 404, ""));
         ProjectBranchesLoaderImpl branchesLoader = new ProjectBranchesLoaderImpl(wsClient);
 
         Loggers.get(ProjectBranchesLoaderImpl.class).setLevel(LoggerLevel.ERROR);

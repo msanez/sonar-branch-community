@@ -4,7 +4,7 @@
 
     <groupId>org.sonarsource</groupId>
     <artifactId>branch</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <description>Branch Plugin for SonarQube Community Edition</description>
     <packaging>sonar-plugin</packaging>
 

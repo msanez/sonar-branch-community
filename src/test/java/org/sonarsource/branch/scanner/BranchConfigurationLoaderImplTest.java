@@ -31,9 +31,21 @@ public class BranchConfigurationLoaderImplTest {
         assertTrue(configuration instanceof DefaultBranchConfiguration);
     }
 
+    @Test
+    public void load_default_master() {
+        BranchConfiguration configuration = branchConfigurationLoader.load(
+                ImmutableMap.of("sonar.branch.name", "master"),
+                () -> ImmutableMap.of("",""),
+                new ProjectBranches(Collections.emptyList())
+        );
+
+        assertNotNull(configuration);
+        assertTrue(configuration instanceof DefaultBranchConfiguration);
+    }
+
     @Test(expected = MessageException.class)
     public void load_no_project_branches() {
-        BranchConfiguration configuration = branchConfigurationLoader.load(
+        branchConfigurationLoader.load(
                 ImmutableMap.of("sonar.branch.name", "test"),
                 () -> ImmutableMap.of("",""),
                 new ProjectBranches(Collections.emptyList())
