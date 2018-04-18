@@ -14,6 +14,7 @@ import org.sonar.scanner.scan.branch.BranchInfo;
 import org.sonar.scanner.scan.branch.BranchType;
 import org.sonar.scanner.scan.branch.DefaultBranchConfiguration;
 import org.sonar.scanner.scan.branch.ProjectBranches;
+import org.sonar.scanner.scan.branch.ProjectPullRequests;
 import org.sonarsource.branch.PropertyDefinitions;
 
 /**
@@ -23,7 +24,7 @@ public class BranchConfigurationLoaderImpl implements BranchConfigurationLoader 
     private static final Logger LOGGER = Loggers.get(BranchConfigurationLoaderImpl.class);
 
     @Override
-    public BranchConfiguration load(Map<String, String> localSettings, Supplier<Map<String, String>> remoteSettingsSupplier, ProjectBranches branches) {
+    public BranchConfiguration load(Map<String, String> localSettings, Supplier<Map<String, String>> remoteSettingsSupplier, ProjectBranches branches, ProjectPullRequests pullRequests) {
         String branchName = StringUtils.trimToNull(localSettings.get("sonar.branch.name"));
         if (branchName == null) {
             return new DefaultBranchConfiguration();

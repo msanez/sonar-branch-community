@@ -12,7 +12,7 @@ import org.sonar.db.component.BranchType;
 import org.sonar.scanner.protocol.output.ScannerReport;
 import org.sonar.server.computation.task.projectanalysis.analysis.Branch;
 import org.sonar.server.computation.task.projectanalysis.analysis.MutableAnalysisMetadataHolder;
-import org.sonar.server.computation.task.projectanalysis.analysis.Project;
+import org.sonar.server.project.Project;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -114,8 +114,8 @@ public class BranchLoaderDelegateImplTest {
         mergeBranchDto.setKey("master");
         mergeBranchDto.setUuid(PROJECT_UUID);
         mergeBranchDto.setProjectUuid(PROJECT_UUID);
-        when(branchDao.selectByKey(dbSession, PROJECT_UUID, "test")).thenReturn(Optional.of(branchDto));
-        when(branchDao.selectByKey(dbSession, PROJECT_UUID, "master")).thenReturn(Optional.of(mergeBranchDto));
+        when(branchDao.selectByBranchKey(dbSession, PROJECT_UUID, "test")).thenReturn(Optional.of(branchDto));
+        when(branchDao.selectByBranchKey(dbSession, PROJECT_UUID, "master")).thenReturn(Optional.of(mergeBranchDto));
 
         branchLoaderDelegate.load(metadata);
 

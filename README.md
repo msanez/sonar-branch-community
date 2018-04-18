@@ -15,4 +15,7 @@ Drop plugin jar file in SonarQube `/extensions/plugins` directory and restart th
 
 ## Compatibility 
 
-The plugin is compatible with SonarQube `6.7+ (LTS)` and `7.0`.
+| Plugin Version | Compatible SonarQube |
+| -------------  | -------------------- |
+| 1.x.x          | 6.7+, 7.0            |
+| 2.0.0          | 7.1                  |

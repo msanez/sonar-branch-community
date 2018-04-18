@@ -38,4 +38,10 @@ public class BranchConfigurationImpl implements BranchConfiguration {
     public String branchBase() {
         return branchBase;
     }
+
+    // Not supported by the plugin
+    @Override
+    public String pullRequestKey() {
+        return null;
+    }
 }

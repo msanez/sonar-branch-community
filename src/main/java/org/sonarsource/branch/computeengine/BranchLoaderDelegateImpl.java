@@ -74,7 +74,7 @@ public class BranchLoaderDelegateImpl implements BranchLoaderDelegate {
 
     private Optional<BranchDto> loadBranchByKey(String projectUuid, String key) {
         try (DbSession dbSession = dbClient.openSession(false)) {
-            return dbClient.branchDao().selectByKey(dbSession, projectUuid, key);
+            return dbClient.branchDao().selectByBranchKey(dbSession, projectUuid, key);
         }
     }
 }

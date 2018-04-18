@@ -10,6 +10,7 @@ import org.sonar.scanner.scan.branch.BranchInfo;
 import org.sonar.scanner.scan.branch.BranchType;
 import org.sonar.scanner.scan.branch.DefaultBranchConfiguration;
 import org.sonar.scanner.scan.branch.ProjectBranches;
+import org.sonar.scanner.scan.branch.ProjectPullRequests;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -24,7 +25,8 @@ public class BranchConfigurationLoaderImplTest {
         BranchConfiguration configuration = branchConfigurationLoader.load(
                 ImmutableMap.of("",""),
                 () -> ImmutableMap.of("",""),
-                new ProjectBranches(Collections.emptyList())
+                new ProjectBranches(Collections.emptyList()),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -36,7 +38,8 @@ public class BranchConfigurationLoaderImplTest {
         BranchConfiguration configuration = branchConfigurationLoader.load(
                 ImmutableMap.of("sonar.branch.name", "master"),
                 () -> ImmutableMap.of("",""),
-                new ProjectBranches(Collections.emptyList())
+                new ProjectBranches(Collections.emptyList()),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -48,7 +51,8 @@ public class BranchConfigurationLoaderImplTest {
         branchConfigurationLoader.load(
                 ImmutableMap.of("sonar.branch.name", "test"),
                 () -> ImmutableMap.of("",""),
-                new ProjectBranches(Collections.emptyList())
+                new ProjectBranches(Collections.emptyList()),
+                new ProjectPullRequests(Collections.emptyList())
         );
     }
 
@@ -57,7 +61,8 @@ public class BranchConfigurationLoaderImplTest {
         BranchConfiguration configuration = branchConfigurationLoader.load(
                 ImmutableMap.of("sonar.branch.name", "master"),
                 () -> ImmutableMap.of("",""),
-                new ProjectBranches(ImmutableList.of(new BranchInfo("master", BranchType.LONG, false, null)))
+                new ProjectBranches(ImmutableList.of(new BranchInfo("master", BranchType.LONG, false, null))),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -77,7 +82,8 @@ public class BranchConfigurationLoaderImplTest {
                 new ProjectBranches(ImmutableList.of(
                         new BranchInfo("test", BranchType.SHORT, false, "master"),
                         new BranchInfo("master", BranchType.LONG, true, null)
-                ))
+                )),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -98,7 +104,8 @@ public class BranchConfigurationLoaderImplTest {
                         new BranchInfo("test", BranchType.SHORT, false, "branch"),
                         new BranchInfo("branch", BranchType.SHORT, false, "master"),
                         new BranchInfo("master", BranchType.LONG, true, null)
-                ))
+                )),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -117,7 +124,8 @@ public class BranchConfigurationLoaderImplTest {
                 () -> ImmutableMap.of("",""),
                 new ProjectBranches(ImmutableList.of(
                         new BranchInfo("master", BranchType.LONG, true, null)
-                ))
+                )),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -136,7 +144,8 @@ public class BranchConfigurationLoaderImplTest {
                 () -> ImmutableMap.of("sonar.branch.longLivedBranches.regex","test"),
                 new ProjectBranches(ImmutableList.of(
                         new BranchInfo("master", BranchType.LONG, true, null)
-                ))
+                )),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);
@@ -155,7 +164,8 @@ public class BranchConfigurationLoaderImplTest {
                 () -> ImmutableMap.of("sonar.branch.longLivedBranches.regex","notmatching"),
                 new ProjectBranches(ImmutableList.of(
                         new BranchInfo("master", BranchType.LONG, true, null)
-                ))
+                )),
+                new ProjectPullRequests(Collections.emptyList())
         );
 
         assertNotNull(configuration);

@@ -62,4 +62,10 @@ public class BranchImpl implements Branch {
                 : ComponentKeys.createEffectiveKey(module.getKey(), StringUtils.trimToNull(component.getPath()));
         return main ? mainBranchKey : mainBranchKey + ComponentDto.BRANCH_KEY_SEPARATOR + branchName;
     }
+
+    // Not supported by the plugin
+    @Override
+    public String getPullRequestId() {
+        return null;
+    }
 }
