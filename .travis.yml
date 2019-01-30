@@ -13,6 +13,7 @@ jobs:
         - mvn clean package
       deploy:
         provider: releases
+        skip_cleanup: true
         api_key:
           secure: "gsNFVgnj3PhmIioNqtELQ+7i6n8527hUpEJ9Jcir6xtJ98MwLZgfujvQsE5P+Hes2cVHcddDJC81M9dRE3ogBVzU3YF2O70jXgX4Z/bPuEogZ0l04lJASVFOZSUJnPUQFF7Pu1edu24P/pHdr3PKCRgc/3YQPTqCrUez3Ml1QPArzJOGHbvrfkjI+fDbLKJB/AtKQdgNNeVmAM2wFq/M3a6WMEuLIArzIVD6no+bZ+ymnznAV0nFCpaSkHcniAisWUEo9G3CpR+szl7km4Tjui2rKeWpXQLWaoIT+Zfjfesc9e1ENbL15zU0bcK7QBXjmwCsWwcD5jezTioLYRL3d5jjpUmlYmQ79iCqD0U6dvz7NCDkoGmTC9UTsUMRLnmx/m6ekkJXPGy2pZcl+O2+5TD6mvnfUPU9KdUJ9pzaaP+wMf/iqQKZsBxTvX28rbikSXN2mpmOFOis+bTj1/Wh3y6bX7I/ZryTe5yZ3Ss5dhw7hbMJGC+ME31UxBXiM745ZX7OKE+tJqLxRvScxbhg51wBc3izB8ECpW/GJLOZhc3Dny3wIpgIo/+trnF8WJJEZ84CbVj9jkGFsM4y/wn0b0DHosG+ObpO0Eksba3fyLe8+OerqdBmKXZRC9sCgQUXcUVVaFgVV9d7ORkb8lVDSXIOSbNYqz3uZtBZgXUgAT8="
         file: target/branch-2.0.0.jar
