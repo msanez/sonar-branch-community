@@ -10,7 +10,7 @@ jobs:
       script: mvn clean verify checkstyle:check
     - stage: "Package JAR file and deploy to Github"
       before_deploy:
-        script: mvn clean package
+        - mvn clean package
       deploy:
         provider: releases
         api_key:
