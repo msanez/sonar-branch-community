@@ -8,6 +8,9 @@ jobs:
     - stage: "Tests"
       name: "Testing plugin java codes"
       script: mvn clean verify checkstyle:check
+    - stage: "Sonar"
+      name: "Analyzing with Sonarqube"
+      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
     - stage: "Package JAR file and deploy to Github"
       before_deploy:
         - mvn clean package
@@ -20,3 +23,9 @@ jobs:
         on:
           tags: true
           repo: virtualdesktopdevops/sonar-branch-community
+
+addons:
+  sonarcloud:
+    organization: "virtualdesktopdevops"
+    token:
+      secure: "ehl44248LVl0rfhzyBoJV1WxTS1k9RGj5LpePQd4JDQDdVPQA54BTwzwxAa7q3Llv8Lfs6Zp8TUPZAh3G2YCTCcYij4DyRsWSCJSmhdoL4NX/MFKDbSl+VtUuocW+GRwiCqtinSFKe7N89E/dhw4EbsO4Nj6+Yt5p519W5bdyzjELbEXei1+VrCLESBuPSbBgxjEw5acLPo8qnAUUStpbWgvMQEUMRDb2LvrHt7SoiouElNO7ks9hWgUbpAP0EDltonul6uFsXEPgXM7Qo7GD8uZ3nroU+z558T7PEZ72dIN9guTqaCugzolasXeK4NpzmGljw8nnE0QaoLXYSbXB/Ocg7ngPih2KrBoxwjMW5hiEj5JhaB+ERL5mj1FsqUQ+LexMSYooYvRws2u8IFrQLzdPN1nP1uF7VGhBzWpYtL+oRn8AuXKjGdqTmvA0sLtloB4d2+9Re4mEj5fXgjsuWozQSpqhfhhx1O/DTxsWHLOHuxw0uene3/Ko+TPJGKV7qGIDxc31xjsoTpNEIHNqg6w5d1+1A/bKSAFTwtPALfun4IY8/lzSGj1NPGXQeMSnTcSSRjzuSammnBjWJuO8Ag1/7bfvKlRj2xyU8OAY89Ij532ff+jCxA6gIYbFunFJisSfzZn+DR/U+6lpo7JfvOZ/4z0JvxvReiOQ0zsiv0="
