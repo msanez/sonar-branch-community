@@ -10,7 +10,7 @@ jobs:
       script: mvn clean verify checkstyle:check
     - stage: "Sonar"
       name: "Analyzing with Sonarqube"
-      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar
+      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
     - stage: "Package JAR file and deploy to Github"
       before_deploy:
         - mvn clean package
