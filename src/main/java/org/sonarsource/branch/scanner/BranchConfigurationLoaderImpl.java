@@ -66,7 +66,7 @@ public class BranchConfigurationLoaderImpl implements BranchConfigurationLoader 
     private String findLingLivedTargetBranch(ProjectBranches projectBranches, @Nullable String targetBranch) {
         if (targetBranch != null) {
             BranchInfo branchInfo = projectBranches.get(targetBranch);
-            Preconditions.checkNotNull(@Nullable branchInfo, "Branch %s not found", targetBranch);
+            Preconditions.checkNotNull(branchInfo, "Branch %s not found", targetBranch);
             if (branchInfo.type() == BranchType.SHORT) {
                 String branchTargetName = branchInfo.branchTargetName();
                 LOGGER.info("{} is short lived branch, checking parent {}", targetBranch, branchTargetName);
