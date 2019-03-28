@@ -1,5 +1,6 @@
-# Branch Plugin for SonarQube Community Edition
-[![Build Status](https://travis-ci.org/s-pw/sonar-branch-community.svg?branch=master)](https://travis-ci.org/s-pw/sonar-branch-community)
+# This plugin is deprecated !
+Use:
+[sonarqube-community-branch-plugin](https://github.com/mc1arke/sonarqube-community-branch-plugin/)
 
 ## Description / Features
 
