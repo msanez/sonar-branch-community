@@ -1,6 +1,31 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk8
+- oraclejdk8
 
-script: mvn clean verify checkstyle:check
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Testing plugin java codes"
+      script: mvn clean verify checkstyle:check
+    - stage: "Sonar"
+      name: "Analyzing with Sonarqube"
+      script: mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+    - stage: "Package JAR file and deploy to Github"
+      before_deploy:
+        - mvn clean package
+      deploy:
+        provider: releases
+        skip_cleanup: true
+        api_key:
+          secure: "gsNFVgnj3PhmIioNqtELQ+7i6n8527hUpEJ9Jcir6xtJ98MwLZgfujvQsE5P+Hes2cVHcddDJC81M9dRE3ogBVzU3YF2O70jXgX4Z/bPuEogZ0l04lJASVFOZSUJnPUQFF7Pu1edu24P/pHdr3PKCRgc/3YQPTqCrUez3Ml1QPArzJOGHbvrfkjI+fDbLKJB/AtKQdgNNeVmAM2wFq/M3a6WMEuLIArzIVD6no+bZ+ymnznAV0nFCpaSkHcniAisWUEo9G3CpR+szl7km4Tjui2rKeWpXQLWaoIT+Zfjfesc9e1ENbL15zU0bcK7QBXjmwCsWwcD5jezTioLYRL3d5jjpUmlYmQ79iCqD0U6dvz7NCDkoGmTC9UTsUMRLnmx/m6ekkJXPGy2pZcl+O2+5TD6mvnfUPU9KdUJ9pzaaP+wMf/iqQKZsBxTvX28rbikSXN2mpmOFOis+bTj1/Wh3y6bX7I/ZryTe5yZ3Ss5dhw7hbMJGC+ME31UxBXiM745ZX7OKE+tJqLxRvScxbhg51wBc3izB8ECpW/GJLOZhc3Dny3wIpgIo/+trnF8WJJEZ84CbVj9jkGFsM4y/wn0b0DHosG+ObpO0Eksba3fyLe8+OerqdBmKXZRC9sCgQUXcUVVaFgVV9d7ORkb8lVDSXIOSbNYqz3uZtBZgXUgAT8="
+        file: target/branch-2.0.0.jar
+        on:
+          tags: true
+          repo: virtualdesktopdevops/sonar-branch-community
+
+addons:
+  sonarcloud:
+    organization: "virtualdesktopdevops"
+    token:
+      secure: "ehl44248LVl0rfhzyBoJV1WxTS1k9RGj5LpePQd4JDQDdVPQA54BTwzwxAa7q3Llv8Lfs6Zp8TUPZAh3G2YCTCcYij4DyRsWSCJSmhdoL4NX/MFKDbSl+VtUuocW+GRwiCqtinSFKe7N89E/dhw4EbsO4Nj6+Yt5p519W5bdyzjELbEXei1+VrCLESBuPSbBgxjEw5acLPo8qnAUUStpbWgvMQEUMRDb2LvrHt7SoiouElNO7ks9hWgUbpAP0EDltonul6uFsXEPgXM7Qo7GD8uZ3nroU+z558T7PEZ72dIN9guTqaCugzolasXeK4NpzmGljw8nnE0QaoLXYSbXB/Ocg7ngPih2KrBoxwjMW5hiEj5JhaB+ERL5mj1FsqUQ+LexMSYooYvRws2u8IFrQLzdPN1nP1uF7VGhBzWpYtL+oRn8AuXKjGdqTmvA0sLtloB4d2+9Re4mEj5fXgjsuWozQSpqhfhhx1O/DTxsWHLOHuxw0uene3/Ko+TPJGKV7qGIDxc31xjsoTpNEIHNqg6w5d1+1A/bKSAFTwtPALfun4IY8/lzSGj1NPGXQeMSnTcSSRjzuSammnBjWJuO8Ag1/7bfvKlRj2xyU8OAY89Ij532ff+jCxA6gIYbFunFJisSfzZn+DR/U+6lpo7JfvOZ/4z0JvxvReiOQ0zsiv0="
